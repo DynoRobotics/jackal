@@ -3,7 +3,7 @@
   <!--
     As you add to this URDF, please be aware that both the robot and
     simulation include it. You must retain compatibility with all of
-    the following launch files:
+    the following launch files
 
     jackal_viz/launch/view_model.launch
     jackal_gazebo/launch/jackal_world.launch
@@ -383,7 +383,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://jackal_description/meshes/ark_enclosure.stl"/>
+          <mesh filename="file://$(find jackal_description)/meshes/ark_enclosure.stl"/>
         </geometry>
         <material name="dark_grey" />
       </visual>

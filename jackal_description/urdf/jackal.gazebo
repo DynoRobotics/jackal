@@ -2,18 +2,71 @@
 <robot>
 
   <gazebo>
-    <plugin name="$(arg prefix)gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>$(arg gazebo_controllers)</parameters>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <ros>
+        <namespace>$(arg prefix)</namespace>
+        <remapping>~/tf:=/jackal/tf</remapping>
+        <remapping>~/tf_static:=tf_static</remapping>
+      </ros>
+      <parameters>$(find jackal_control)/config/control.yaml</parameters>
+      <!-- <update_rate>50</update_rate> -->
     </plugin>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)imu_link">
-    <sensor name="$(arg prefix)imu_sensor" type="imu">
-    <plugin filename="libgazebo_ros_imu_sensor.so" name="$(arg prefix)imu_plugin">
+  <gazebo reference="$(arg prefix)_imu_link">
+    <sensor name="$(arg prefix)_imu_sensor" type="imu">
+    <always_on>true</always_on>
+    <update_rate>50</update_rate>
+    <imu>
+      <angular_velocity>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+          </noise>
+        </z>
+      </angular_velocity>
+      <linear_acceleration>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+          </noise>
+        </z>
+      </linear_acceleration>
+    </imu>
+
+    <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <ros>
           <namespace>$(arg prefix)</namespace>
-          <remapping>~/out:=imu/data_raw</remapping>
+          <remapping>~/out:=/$(arg prefix)/imu/data</remapping>
         </ros>
+        <body_name>jackal_imu_link</body_name>
+        <frame_name>jackal_imu_link</frame_name>
         <initial_orientation_as_reference>false</initial_orientation_as_reference>
       </plugin>
       <always_on>true</always_on>
@@ -22,8 +75,8 @@
     </sensor>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)gps_link">
-    <sensor name="$(arg prefix)gps_sensor" type="gps">
+  <gazebo reference="$(arg prefix)_gps_link">
+    <sensor name="$(arg prefix)_gps_sensor" type="gps">
     <plugin filename="libgazebo_ros_gps_sensor.so" name="$(arg prefix)gps_plugin">
         <ros>
           <namespace>$(arg prefix)</namespace>
@@ -35,27 +88,27 @@
     </sensor>
   </gazebo>
 
-  <gazebo reference="base_link">
+  <gazebo reference="$(arg prefix)_base_link">
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
-  <gazebo reference="chassis_link">
+  <gazebo reference="$(arg prefix)_chassis_link">
     <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-    <gazebo reference="imu_link">
+  <gazebo reference="$(arg prefix)_imu_link">
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
-  <gazebo reference="navsat_link">
+  <gazebo reference="$(arg prefix)_navsat_link">
     <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-  <gazebo reference="front_fender_link">
+  <gazebo reference="$(arg prefix)_front_fender_link">
     <material>Gazebo/Yellow</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-  <gazebo reference="rear_fender_link">
+  <gazebo reference="$(arg prefix)_rear_fender_link">
     <material>Gazebo/Yellow</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
