@@ -15,7 +15,6 @@ def generate_launch_description():
         executable="teleop_twist_keyboard",
         output='screen',
         remappings={('cmd_vel', 'key_vel')},
-        namespace={'jackal'},
         prefix = 'xterm -e')
 
     ld = LaunchDescription()
