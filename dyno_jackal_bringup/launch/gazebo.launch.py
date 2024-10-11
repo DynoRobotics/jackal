@@ -2,10 +2,10 @@ import os.path
 import os
 
 from launch import LaunchDescription
-from launch.actions import RegisterEventHandler
+from launch.actions import RegisterEventHandler, GroupAction
 from launch.event_handlers import OnProcessExit
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
-from launch_ros.actions import Node
+from launch_ros.actions import Node, PushRosNamespace, SetRemap
 from launch_ros.descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
@@ -86,7 +86,9 @@ def generate_launch_description():
                    '-z',
                    '0.2',
                    '-topic',
-                   'robot_description'],
+                   'robot_description',
+                   '-robot_namespace',
+                   'jackal',],
         output='screen',
     )
 
