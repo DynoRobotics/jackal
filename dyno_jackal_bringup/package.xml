@@ -17,6 +17,7 @@
   <depend>robot_localization</depend>
   <depend>twist_mux</depend>
   <depend>gazebo_ros_pkgs</depend>
+  <depend>dyno_utils</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

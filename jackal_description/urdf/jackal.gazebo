@@ -118,7 +118,6 @@
       <always_on>true</always_on>
       <update_rate>50.0</update_rate>
       <body_name>jackal/base_link</body_name>
-      <topic_name>jackal/true_pose</topic_name>
       <gaussian_noise>0.01</gaussian_noise>
       <frame_name>world</frame_name>
       <xyz_offset>0 0 0</xyz_offset>
