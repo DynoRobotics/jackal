@@ -4,12 +4,18 @@ import os
 from launch import LaunchDescription
 from launch.actions import RegisterEventHandler, GroupAction
 from launch.event_handlers import OnProcessExit
-from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import (
+    Command,
+    FindExecutable,
+    LaunchConfiguration,
+    PathJoinSubstitution,
+)
 from launch_ros.actions import Node, PushRosNamespace, SetRemap
 from launch_ros.descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 import launch
+
 
 def generate_launch_description():
 
@@ -21,8 +27,10 @@ def generate_launch_description():
 
 
     # Set the path to the SDF model files.
-    gazebo_models_path = os.path.join(pkg_jackal_description, 'meshes')
+    gazebo_models_path = os.path.join(pkg_jackal_description, "meshes")
     os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
+    # os.environ["GZ_SIM_RESOURCE_PATH"] = gazebo_models_path
+    # os.environ["IGN_GAZEBO_RESOURCE_PATH"] = gazebo_models_path
 
     # Get URDF via xacro
     robot_description_content = Command(
@@ -30,7 +38,11 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("jackal_description"), "urdf", "jackal.urdf.xacro"]
+                [
+                    FindPackageShare("jackal_description"),
+                    "urdf",
+                    "jackal.urdf.xacro",
+                ]
             ),
             " ",
             "name:=jackal",
@@ -54,7 +66,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="screen",
-        parameters=[{'use_sim_time': True}, robot_description],
+        parameters=[{"use_sim_time": True}, robot_description],
     )
 
     # spawn_joint_state_broadcaster = Node(
@@ -74,22 +86,18 @@ def generate_launch_description():
 
     # Spawn robot
     spawn_robot = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        name='spawn_jackal',
-        arguments=['-entity',
-                   'jackal',
-                   '-x',
-                   "0.0",
-                   '-y',
-                   '2.0',
-                   '-z',
-                   '0.2',
-                   '-topic',
-                   'robot_description',
-                   '-robot_namespace',
-                   'jackal',],
-        output='screen',
+        package="ros_gz_sim",
+        executable="create",
+        name="spawn_jackal",
+        arguments=[
+            "-name","jackal",
+            '-x',"0.0",
+            '-y','2.0',
+            '-z','0.2',
+            "-topic","robot_description",
+            "-robot_namespace","jackal",
+        ],
+        output="screen",
     )
 
     ld = LaunchDescription()

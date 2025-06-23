@@ -66,10 +66,10 @@ def generate_launch_description():
         # SetRemap('/tf', 'tf'),
         # SetRemap('/tf_static', 'tf_static'),
         jackal_gazebo,
-        control,
-        twist_mux,
-        keyboard_steering,
-        jackal_localization
+        # control,
+        # twist_mux,
+        # keyboard_steering,
+        # jackal_localization
       ]
    )
     
@@ -82,7 +82,7 @@ def generate_launch_description():
         DynoWaitFor(
             name="jackal_launched_last",
             message_on_topics=[
-                ("/clock", rosgraph_msgs.msg.Clock, rclpy.qos.qos_profile_sensor_data), # Wait for Gazebo to launch
+                # ("/clock", rosgraph_msgs.msg.Clock, rclpy.qos.qos_profile_sensor_data), # Wait for Gazebo to launch
                 # ("/static_agents/robot_description", std_msgs.msg.String, rclpy.qos.qos_profile_system_default), # Wait for static agents to launch
                 # ("/scan", sensor_msgs.msg.LaserScan, rclpy.qos.qos_profile_sensor_data), # Wait for infobot to launch
             ],
