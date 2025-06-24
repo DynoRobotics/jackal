@@ -66,9 +66,9 @@ def generate_launch_description():
         # SetRemap('/tf', 'tf'),
         # SetRemap('/tf_static', 'tf_static'),
         jackal_gazebo,
-        # control,
-        # twist_mux,
-        # keyboard_steering,
+        control,
+        twist_mux,
+        keyboard_steering,
         # jackal_localization
       ]
    )

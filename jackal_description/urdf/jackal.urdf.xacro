@@ -276,30 +276,34 @@
 
   <!-- ROS2 controls -->
   <ros2_control name="jackal_hardware" type="system">
-    <hardware>
+      <hardware>
       <xacro:if value="$(arg is_sim)">
-        <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
       </xacro:if>
       <xacro:unless value="$(arg is_sim)">
         <plugin>jackal_hardware/JackalHardware</plugin>
         <plugin>fake_components/GenericSystem</plugin>
       </xacro:unless>
     </hardware>
+
     <joint name="$(arg prefix)/front_left_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
+
     <joint name="$(arg prefix)/rear_left_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
+
     <joint name="$(arg prefix)/front_right_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
+
     <joint name="$(arg prefix)/rear_right_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
