@@ -36,7 +36,7 @@
     <xacro:property name="topic" value="$(optenv JACKAL_LASER_TOPIC scan)" />
     <xacro:property name="tower" value="$(optenv JACKAL_LASER_TOWER 0)" />
     <xacro:property name="prefix" value="$(optenv JACKAL_LASER_PREFIX ${mount})" />
-    <xacro:property name="parent" value="$(optenv JACKAL_LASER_PARENT jackal/${mount}_mount)" />
+    <xacro:property name="parent" value="$(optenv JACKAL_LASER_PARENT jackal_${mount}_mount)" />
     <xacro:property name="lidar_model" value="$(optenv JACKAL_LASER_MODEL ust10)" />
     <!-- SICK LMS1xx -->
     <!-- <xacro:if value="${lidar_model == 'lms1xx'}">
@@ -64,7 +64,7 @@
     </xacro:if> -->
     <!-- Hokuyo UST10 -->
     <xacro:if value="${lidar_model == 'ust10'}">
-      <xacro:hokuyo_ust10_mount topic="${topic}" prefix="jackal/front" parent_link="${parent}">
+      <xacro:hokuyo_ust10_mount topic="${topic}" prefix="jackal_front" parent_link="${parent}">
         <origin xyz="$(optenv JACKAL_LASER_OFFSET 0 0 0)" rpy="$(optenv JACKAL_LASER_RPY 0 0 0)" />
       </xacro:hokuyo_ust10_mount>
     </xacro:if>

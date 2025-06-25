@@ -9,9 +9,9 @@
       ceres_loss_function: None
 
       # ROS Parameters
-      odom_frame: jackal/odom
+      odom_frame: jackal_odom
       map_frame: map
-      base_frame: jackal/base_link
+      base_frame: jackal_base_link
       scan_topic: scan
       mode: mapping
 
@@ -81,7 +81,7 @@
       # ROS Parameters
       odom_frame: odom
       map_frame: map
-      base_frame: jackal/base_footprint
+      base_frame: jackal_base_footprint
       scan_topic: jackal/scan
       mode: localization
 

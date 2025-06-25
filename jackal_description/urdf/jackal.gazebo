@@ -5,18 +5,19 @@
     <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="libgz_ros2_control-system.so">
       <ros>
         <namespace>$(arg prefix)</namespace>
-        <remapping>~/tf:=/jackal/tf</remapping>
-        <remapping>~/tf_static:=/jackal/tf_static</remapping>
+        <remapping>~/tf:=/tf</remapping>
+        <remapping>~/tf_static:=/tf_static</remapping>
       </ros>
       <parameters>$(find jackal_control)/config/control.yaml</parameters>
       <!-- <update_rate>50</update_rate> -->
     </plugin>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)/imu_link">
-    <sensor name="$(arg prefix)/imu_sensor" type="imu">
+  <gazebo reference="$(arg prefix)_imu_link">
+    <sensor name="$(arg prefix)_imu_sensor" type="imu">
     <always_on>true</always_on>
     <update_rate>50</update_rate>
+
     <imu>
       <angular_velocity>
         <x>
@@ -38,6 +39,7 @@
           </noise>
         </z>
       </angular_velocity>
+      
       <linear_acceleration>
         <x>
           <noise type="gaussian">
@@ -65,8 +67,8 @@
           <namespace>$(arg prefix)</namespace>
           <remapping>~/out:=/$(arg prefix)/imu/data</remapping>
         </ros>
-        <body_name>jackal/imu_link</body_name>
-        <frame_name>jackal/imu_link</frame_name>
+        <body_name>$(arg prefix)_imu_link</body_name>
+        <frame_name>$(arg prefix)_imu_link</frame_name>
         <initial_orientation_as_reference>false</initial_orientation_as_reference>
       </plugin>
       <always_on>true</always_on>
@@ -75,9 +77,9 @@
     </sensor>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)_/ps_link">
+  <gazebo reference="$(arg prefix)_ps_link">
     <sensor name="$(arg prefix)_gps_sensor" type="gps">
-    <plugin filename="libgazebo_ros_gps_sensor.so" name="$(arg prefix)/gps_plugin">
+    <plugin filename="libgazebo_ros_gps_sensor.so" name="$(arg prefix)_gps_plugin">
         <ros>
           <namespace>$(arg prefix)</namespace>
           <remapping>~/out:=gps/data</remapping>
@@ -88,27 +90,27 @@
     </sensor>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)/base_link">
+  <gazebo reference="$(arg prefix)_base_link">
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)/chassis_link">
+  <gazebo reference="$(arg prefix)_chassis_link">
     <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-  <gazebo reference="$(arg prefix)/imu_link">
+  <gazebo reference="$(arg prefix)_imu_link">
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
-  <gazebo reference="$(arg prefix)/navsat_link">
+  <gazebo reference="$(arg prefix)_navsat_link">
     <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-  <gazebo reference="$(arg prefix)/front_fender_link">
+  <gazebo reference="$(arg prefix)_front_fender_link">
     <material>Gazebo/Yellow</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-  <gazebo reference="$(arg prefix)/rear_fender_link">
+  <gazebo reference="$(arg prefix)_rear_fender_link">
     <material>Gazebo/Yellow</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
@@ -117,8 +119,8 @@
     <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
       <always_on>true</always_on>
       <update_rate>50.0</update_rate>
-      <body_name>jackal/base_link</body_name>
-      <topic_name>jackal/true_pose</topic_name>
+      <body_name>(arg prefix)_base_link</body_name>
+      <topic_name>(arg prefix)_pose</topic_name>
       <gaussian_noise>0.01</gaussian_noise>
       <frame_name>world</frame_name>
       <xyz_offset>0 0 0</xyz_offset>

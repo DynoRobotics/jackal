@@ -23,14 +23,12 @@ def generate_launch_description():
 
     # Launch args
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
-    location = LaunchConfiguration("location", default="dyno_office_indoors")
-
 
     # Set the path to the SDF model files.
     gazebo_models_path = os.path.join(pkg_jackal_description, "meshes")
     os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
-    # os.environ["GZ_SIM_RESOURCE_PATH"] = gazebo_models_path
-    # os.environ["IGN_GAZEBO_RESOURCE_PATH"] = gazebo_models_path
+    os.environ["GZ_SIM_RESOURCE_PATH"] = gazebo_models_path
+    os.environ["IGN_GAZEBO_RESOURCE_PATH"] = gazebo_models_path
 
     # Get URDF via xacro
     robot_description_content = Command(

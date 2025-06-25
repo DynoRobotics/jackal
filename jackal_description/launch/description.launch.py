@@ -15,7 +15,11 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name='xacro')]),
             ' ',
             PathJoinSubstitution(
-                [FindPackageShare('jackal_description'), 'urdf', 'jackal.urdf.xacro']
+                [
+                    FindPackageShare('jackal_description'),
+                    'urdf',
+                    'jackal.urdf.xacro'
+                ]
             )
         ]
     )
