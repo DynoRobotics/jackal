@@ -10,6 +10,10 @@
           topic   : key_vel
           timeout : 0.5
           priority: 100
+        joy:
+          topic   : joy_vel
+          timeout : 0.5
+          priority: 110
         scenario:
           topic   : scenario_vel
           timeout : 0.5

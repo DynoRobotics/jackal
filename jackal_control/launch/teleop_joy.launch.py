@@ -4,34 +4,60 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
-    lc = LaunchContext()
-    joy_type = EnvironmentVariable('CPR_JOY_TYPE', default_value='logitech')
+    # lc = LaunchContext()
+    # joy_type = EnvironmentVariable('CPR_JOY_TYPE', default_value='logitech')
 
 
+    # filepath_config_joy = PathJoinSubstitution(
+    #     [FindPackageShare('jackal_control'), 'config', ('teleop_' + joy_type.perform(lc) + '.yaml')]
+    # )
     filepath_config_joy = PathJoinSubstitution(
-        [FindPackageShare('jackal_control'), 'config', ('teleop_' + joy_type.perform(lc) + '.yaml')]
+        [FindPackageShare('jackal_control'),'config','joy_bt.yaml']
     )
 
-    node_joy = Node(
-        namespace='joy_teleop',
-        package='joy',
-        executable='joy_node',
-        output='screen',
-        name='joy_node',
-        parameters=[filepath_config_joy]
+    # pkg_jackal_control = get_package_share_directory("jackal_control")
+    # joy2twist_params = os.path.join(pkg_jackal_control, "config", "joy_bt.yaml")
+
+    start_joy2twist_node = Node(
+        package="joy2twist",
+        executable="joy2twist",
+        name="joy2twist_node",
+        parameters=[filepath_config_joy],
+        output={"screen"},
+        remappings={("cmd_vel", "joy_vel")},
+        emulate_tty="true",
     )
 
-    node_teleop_twist_joy = Node(
-        namespace='joy_teleop',
-        package='teleop_twist_joy',
-        executable='teleop_node',
-        output='screen',
-        name='teleop_twist_joy_node',
-        parameters=[filepath_config_joy]
+    start_joy_linux_node = Node(
+        package="joy_linux",
+        executable="joy_linux_node",
+        output={"screen"},
+        emulate_tty="true",
     )
+
+
+    # node_joy = Node(
+    #     namespace='joy_teleop',
+    #     package='joy',
+    #     executable='joy_node',
+    #     output='screen',
+    #     name='joy_node',
+    #     parameters=[filepath_config_joy]
+    # )
+
+    # node_teleop_twist_joy = Node(
+    #     namespace='joy_teleop',
+    #     package='teleop_twist_joy',
+    #     executable='teleop_node',
+    #     output='screen',
+    #     name='teleop_twist_joy_node',
+    #     parameters=[filepath_config_joy]
+    # )
 
 
     ld = LaunchDescription()
-    ld.add_action(node_joy)
-    ld.add_action(node_teleop_twist_joy)
+    ld.add_action(start_joy2twist_node)
+    ld.add_action(start_joy_linux_node)
+    # ld.add_action(node_joy)
+    # ld.add_action(node_teleop_twist_joy)
     return ld

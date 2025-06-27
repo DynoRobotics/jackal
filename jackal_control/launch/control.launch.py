@@ -1,10 +1,12 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, GroupAction
+from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription
 from launch.conditions import UnlessCondition
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node, PushRosNamespace
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
+
 
 
 def generate_launch_description():
@@ -86,9 +88,19 @@ def generate_launch_description():
         )
     ])
 
+    teleop_joy_control = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare('jackal_control'), 'launch', 'teleop_joy.launch.py']
+            )
+        )
+    )
+
+
     ld = LaunchDescription()
     # ld.add_action(robot_description_command_arg)
     ld.add_action(is_sim_arg)
     # ld.add_action(localization_group_action)
     ld.add_action(control_group_action)
+    ld.add_action(teleop_joy_control)
     return ld
