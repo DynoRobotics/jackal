@@ -9,7 +9,7 @@
 
       frequency: 50.0
 
-      odom0: jackal/velocity_controller/odom
+      odom0: velocity_controller/odom
       # odom0: odom
       odom0_config: [true, true, false,
                     false, false, true,
