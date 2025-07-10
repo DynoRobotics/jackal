@@ -17,6 +17,7 @@ import rclpy.qos
 
 import std_msgs.msg
 import sensor_msgs.msg
+import nav_msgs.msg
 import rosgraph_msgs.msg
 
 def generate_launch_description():
@@ -83,7 +84,8 @@ def generate_launch_description():
             name="jackal_launched_last",
             message_on_topics=[
                 ("/clock", rosgraph_msgs.msg.Clock, rclpy.qos.qos_profile_sensor_data), # Wait for Gazebo to launch
-                ("/static_agents/robot_description", std_msgs.msg.String, rclpy.qos.qos_profile_system_default), # Wait for static agents to launch
+                # ("/static_agents/robot_description", std_msgs.msg.String, rclpy.qos.qos_profile_system_default), # Wait for static agents to launch
+                ("/pallet_truck/velocity_controller/odom", nav_msgs.msg.Odometry, rclpy.qos.qos_profile_system_default), # Wait for pallet truck to launch
                 # ("/scan", sensor_msgs.msg.LaserScan, rclpy.qos.qos_profile_sensor_data), # Wait for infobot to launch
             ],
             actions=[
