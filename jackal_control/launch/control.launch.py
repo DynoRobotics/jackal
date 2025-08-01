@@ -58,18 +58,18 @@ def generate_launch_description():
     # ROS2 Controllers
     control_group_action = GroupAction([
         # ROS2 Control
-        Node(
-            package='controller_manager',
-            executable='ros2_control_node',
-            parameters=[config_velocity_controller],
-            output={
-                'stdout': 'screen',
-                'stderr': 'screen',
-            },
-            remappings=[('/tf', 'tf')],
-            # namespace='jackal',
-            condition=UnlessCondition(is_sim)
-        ),
+        # Node(
+        #     package='controller_manager',
+        #     executable='ros2_control_node',
+        #     parameters=[config_velocity_controller],
+        #     output={
+        #         'stdout': 'screen',
+        #         'stderr': 'screen',
+        #     },
+        #     # remappings=[('/tf', 'tf')],
+        #     # namespace='jackal',
+        #     condition=UnlessCondition(is_sim)
+        # ),
 
         # Joint State Broadcaster
         Node(

@@ -1,30 +1,49 @@
 /**:
-  ekf_node:
+  ekf_node: 
     ros__parameters:
       odom_frame: odom
-      base_link_frame: jackal_base_link
+      base_link_frame: base_link
       world_frame: map
       publish_tf: true
       two_d_mode: true
 
       frequency: 50.0
 
-      odom0: velocity_controller/odom
-      # odom0: odom
-      odom0_config: [true, true, false,
-                    false, false, true,
-                    true, true, false,
-                    false, false, true,
-                    false, false, false]
+      # odom0: velocity_controller/odom
+      # # odom0: odom
+      # odom0_config: [true, true, false,
+      #               false, false, true,
+      #               true, true, false,
+      #               false, false, true,
+      #               false, false, false]
+      # odom0_differential: false
+      # odom0_queue_size: 10
+
+      # imu0: imu/data
+      # imu0_config: [false, false, false,
+      #               false, false, false,
+      #               false, false, false,
+      #               false, false, true,
+      #               true, false, false]
+      # imu0_differential: false
+      # imu0_queue_size: 10
+      # imu0_remove_gravitational_acceleration: true
+
+      # odom1: pose_data
+      # odom1_config: [true, true, false,  # x, y, z
+      #               false, false, true,  # roll, pitch, yaw
+      #               false, false, false, # x', y', z'
+      #               false, false, false, # roll', pitch', yaw'
+      #               false, false, false] # x'', y'', z''
+      # odom1_differential: false
+      # odom1_queue_size: 10
+
+      # PLACEHOLDER (only gazebo [x,y,yaw] data)
+      odom0: pose_data
+      odom0_config: [true, true, false,  # x, y, z
+                    false, false, true,  # roll, pitch, yaw
+                    false, false, false, # x', y', z'
+                    false, false, false, # roll', pitch', yaw'
+                    false, false, false] # x'', y'', z''
       odom0_differential: false
       odom0_queue_size: 10
-
-      imu0: /jackal/imu/data
-      imu0_config: [false, false, false,
-                    false, false, false,
-                    false, false, false,
-                    false, false, true,
-                    true, false, false]
-      imu0_differential: false
-      imu0_queue_size: 10
-      imu0_remove_gravitational_acceleration: true
