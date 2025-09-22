@@ -70,7 +70,7 @@ def generate_launch_description():
             package="tf2_ros",
             executable="static_transform_publisher",
             name="static_map_to_world",
-            arguments=["0", "0", "0", "0", "0", "0", "map", "world"],
+            arguments=["0", "0", "0", "0", "0", "0", "world", "map"],
         )
     ])
 
