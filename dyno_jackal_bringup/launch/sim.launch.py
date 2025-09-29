@@ -1,6 +1,6 @@
 import os.path
 
-from launch import LaunchDescription
+from launch import LaunchDescription, LaunchService
 from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, RegisterEventHandler
 from launch.conditions import IfCondition, UnlessCondition
 from launch.event_handlers import OnProcessExit
@@ -104,29 +104,32 @@ def generate_launch_description():
 
     # TODO(Chris): Jackal namespace is for some reason given to other robots spawned
     # *after* the Jackal. Until this is sorted out, we will launch the Jackal last
+    # TODO(Sebbe): Did not observe this behavior, testing without the DynoWaitFor
     ld = LaunchDescription()
     ld.add_action(declare_namespace_launch_arg)
     ld.add_action(declare_use_sim_time_arg)
-    ld.add_action(
-        DynoWaitFor(
-            name="jackal_launched_last",
-            message_on_topics=[
-                ("/clock", rosgraph_msgs.msg.Clock, rclpy.qos.qos_profile_sensor_data), # Wait for Gazebo to launch
-                # ("/static_agents/robot_description", std_msgs.msg.String, rclpy.qos.qos_profile_system_default), # Wait for static agents to launch
-                # ("/pallet_truck/velocity_controller/odom", nav_msgs.msg.Odometry, rclpy.qos.qos_profile_system_default), # Wait for pallet truck to launch
-                # ("/scan", sensor_msgs.msg.LaserScan, rclpy.qos.qos_profile_sensor_data), # Wait for infobot to launch
-            ],
-            actions=[
-                jackal_with_namespace_and_remapping,
-                jackal_navigation # Placed here to avoid namespacing
-                ],
-        )
-    )
+    # ld.add_action(
+    #     DynoWaitFor(
+    #         name="jackal_launched_last",
+    #         message_on_topics=[
+    #             ("/clock", rosgraph_msgs.msg.Clock, rclpy.qos.qos_profile_sensor_data), # Wait for Gazebo to launch
+    #             # ("/static_agents/robot_description", std_msgs.msg.String, rclpy.qos.qos_profile_system_default), # Wait for static agents to launch
+    #             # ("/pallet_truck/velocity_controller/odom", nav_msgs.msg.Odometry, rclpy.qos.qos_profile_system_default), # Wait for pallet truck to launch
+    #             # ("/scan", sensor_msgs.msg.LaserScan, rclpy.qos.qos_profile_sensor_data), # Wait for infobot to launch
+    #         ],
+    #         actions=[
+    #             jackal_with_namespace_and_remapping,
+    #             jackal_navigation # Placed here to avoid namespacing
+    #             ],
+    #     )
+    # )
+    ld.add_action(jackal_with_namespace_and_remapping)
+    ld.add_action(jackal_navigation)
 
     return ld
 
 def main(argv=None):
-    launch_service = launch.LaunchService(debug=False)
+    launch_service = LaunchService(debug=False)
     launch_service.include_launch_description(generate_launch_description())
     return launch_service.run()
 
