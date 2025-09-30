@@ -18,3 +18,7 @@
           topic   : scenario_vel
           timeout : 0.5
           priority: 70
+        safety:
+          topic   : safety_vel
+          timeout : 0.5
+          priority: 90
