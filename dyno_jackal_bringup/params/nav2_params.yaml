@@ -3,6 +3,7 @@
     ros__parameters:
       robot_base_frame: "jackal/base_link"
       odom_frame: jackal/odom
+      enable_stamped_cmd_vel: true
 
   bt_navigator:
     ros__parameters:
@@ -10,6 +11,7 @@
       default_nav_through_poses_bt_xml: "/home/ros/src/simulation/pallet_truck/pallet_truck_navigation/config/navigate_through_poses_w_replanning_and_recovery.xml"
       robot_base_frame: "jackal/base_link"
       odom_topic: jackal/velocity_controller/odom
+      enable_stamped_cmd_vel: true
       plugin_lib_names:
       - nav2_compute_path_to_pose_action_bt_node
       - nav2_follow_path_action_bt_node
@@ -71,6 +73,7 @@
       robot_base_frame: jackal/base_link
       odom_frame: jackal/odom
       odom_topic: jackal/velocity_controller/odom
+      enable_stamped_cmd_vel: true
       global_frame: map        
       map_topic: /map
       use_sim_time: true
@@ -228,7 +231,7 @@
       planner_plugins: ["GridBased"]  # example plugin name
       odom_frame: jackal/odom
       GridBased:
-        plugin: "nav2_navfn_planner/NavfnPlanner"  # actual plugin class name
+        plugin: "nav2_navfn_planner::NavfnPlanner"  # actual plugin class name
 
   planner_server_rclcpp_node:
     ros__parameters:
