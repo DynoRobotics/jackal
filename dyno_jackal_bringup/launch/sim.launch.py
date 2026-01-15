@@ -80,13 +80,27 @@ def generate_launch_description():
             output='screen',
             remappings=
             {
-                ('cmd_vel_out', 'velocity_controller/cmd_vel')
+                ('cmd_vel_out', 'velocity_controller/cmd_vel_unstamped')
             }, 
             parameters=
             [
                 twist_mux_params,
                 {"use_sim_time": use_sim_time}
             ]
+    )
+
+    # twist_stamper node
+    # Since jazzy the ros2_controllers requires stamped cmd_vel, we use twist_stamper to add timestamps
+    twist_stamper = Node(
+        package="twist_stamper",
+        executable="twist_stamper",
+        name="twist_stamper_node",
+        output="screen",
+        remappings=[
+            ("cmd_vel_in", "velocity_controller/cmd_vel_unstamped"),
+            ("cmd_vel_out", "velocity_controller/cmd_vel"),
+        ],
+        parameters=[{"frame_id": f"jackal/base_link"}, {"use_sim_time": True}],
     )
     
     jackal_with_namespace_and_remapping = GroupAction(
@@ -97,6 +111,7 @@ def generate_launch_description():
             jackal_gazebo,
             control,
             twist_mux,
+            twist_stamper,
             keyboard_steering,
             jackal_localization,
         ]

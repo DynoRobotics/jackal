@@ -33,11 +33,11 @@ jackal:
       twist_covariance_diagonal: [1000000.0, 1000000.0, 0.03, 1000000.0, 1000000.0, 0.03]
 
       open_loop: false
-      enable_odom_tf: true
+      enable_odom_tf: false
 
       cmd_vel_timeout: 0.25
       #publish_limited_velocity: true
-      use_stamped_vel: true
+      use_stamped_vel: false
       #velocity_rolling_window_size: 10
 
       # Preserve turning radius when limiting speed/acceleration/jerk
