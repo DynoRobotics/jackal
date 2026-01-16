@@ -57,9 +57,9 @@
       <material>Gazebo/DarkGrey</material>
       <selfCollide>false</selfCollide>
       <mu1 value="0.5"/>
-      <mu2 value="0.5"/>
+      <mu2 value="0.1"/>
       <kp value="10000000.0" />
-      <kd value="1" />
+      <kd value="10" />
       <fdir1 value="1 0 0"/>
     </gazebo>
 
@@ -68,6 +68,8 @@
       <child link="${wheel_prefix}_wheel_link" />
       <xacro:insert_block name="joint_pose" />
       <axis xyz="0 1 0" />
+      <limit effort="8.0" velocity="4.0"/>
+      <dynamics damping="0.0" friction="0.0"/>
     </joint>
 
     <!-- In reality, Jackal has only two motors, one per side. However, it's more
@@ -276,7 +278,7 @@
 
   <!-- ROS2 controls -->
   <ros2_control name="jackal_hardware" type="system">
-      <hardware>
+    <hardware>
       <xacro:if value="$(arg is_sim)">
         <plugin>gz_ros2_control/GazeboSimSystem</plugin>
       </xacro:if>
@@ -285,25 +287,21 @@
         <plugin>fake_components/GenericSystem</plugin>
       </xacro:unless>
     </hardware>
-
     <joint name="$(arg prefix)/front_left_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-
     <joint name="$(arg prefix)/rear_left_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-
     <joint name="$(arg prefix)/front_right_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-
     <joint name="$(arg prefix)/rear_right_wheel_joint">
       <command_interface name="velocity"/>
       <state_interface name="position"/>

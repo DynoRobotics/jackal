@@ -14,6 +14,7 @@ def generate_launch_description():
         # Joint State Broadcaster
         Node(
             package='controller_manager',
+            name='joint_state_broadcaster_spawner',
             executable='spawner',
             arguments=['joint_state_broadcaster', '-c', '/jackal/controller_manager'],
             output='screen',
@@ -22,6 +23,7 @@ def generate_launch_description():
         # Velocity Controller
         Node(
             package='controller_manager',
+            name='velocity_controller_spawner',
             executable='spawner',
             arguments=['velocity_controller', '-c', '/jackal/controller_manager'],
             output='screen',
