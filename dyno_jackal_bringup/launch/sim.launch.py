@@ -1,7 +1,7 @@
 import os.path
 
 from launch import LaunchDescription, LaunchService
-from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, RegisterEventHandler, LogInfo
 from launch.conditions import IfCondition, UnlessCondition
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -21,6 +21,11 @@ import nav_msgs.msg
 import rosgraph_msgs.msg
 
 def generate_launch_description():
+
+    # Add logging
+    log_launch_start = LogInfo(
+        msg="JACKAL LOG: Starting Jackal simulation launch..."
+    )
 
 
     declare_namespace_launch_arg = DeclareLaunchArgument(
@@ -46,6 +51,7 @@ def generate_launch_description():
     pkg_jackal_control = get_package_share_directory("jackal_control")
 
     twist_mux_params = os.path.join(get_package_share_directory("dyno_jackal_bringup"), "params", "twist_mux.yaml")
+
 
     # Launch args
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
@@ -121,6 +127,7 @@ def generate_launch_description():
     # *after* the Jackal. Until this is sorted out, we will launch the Jackal last
     # TODO(Sebbe): Did not observe this behavior, testing without the DynoWaitFor
     ld = LaunchDescription()
+    ld.add_action(log_launch_start)
     ld.add_action(declare_namespace_launch_arg)
     ld.add_action(declare_use_sim_time_arg)
     # ld.add_action(

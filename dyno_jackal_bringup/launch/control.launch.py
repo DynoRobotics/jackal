@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import GroupAction, IncludeLaunchDescription
+from launch.actions import GroupAction, IncludeLaunchDescription, LogInfo
 from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
@@ -7,6 +7,10 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
+
+    log_launch_start = LogInfo(
+        msg="JACKAL LOG: Starting Jackal CONTROL launch..."
+    )
 
     # ROS2 Controllers
     control_group_action = GroupAction([
@@ -39,6 +43,7 @@ def generate_launch_description():
     )
 
     ld = LaunchDescription()
+    ld.add_action(log_launch_start)
     ld.add_action(control_group_action)
     ld.add_action(teleop_joy_control)
     return ld
