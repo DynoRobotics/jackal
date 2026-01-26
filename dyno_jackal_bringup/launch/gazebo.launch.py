@@ -71,11 +71,26 @@ def generate_launch_description():
             "-robot_namespace","jackal",
         ],
         output="screen",
+        parameters=[{"use_sim_time": True}],
+    )
+
+    # Bridge the robot pose topic from Gazebo to ROS2
+    # For SIMLAN (SMILE) scenario manager TTC calculations
+    ros_gz_bridge=Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name="jackal_gz_bridge",
+        output="screen",
+        arguments=[
+                    f"/model/jackal/odom_ground_truth@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+                ],
+        remappings=[(f"/model/jackal/odom_ground_truth", f"odom_ground_truth")]
     )
 
     ld = LaunchDescription()
     ld.add_action(robot_state_publisher)
     ld.add_action(spawn_robot)
+    ld.add_action(ros_gz_bridge)
 
     return ld
 

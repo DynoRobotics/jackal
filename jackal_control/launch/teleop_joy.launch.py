@@ -15,13 +15,14 @@ def generate_launch_description():
     # filepath_config_joy = PathJoinSubstitution(
     #     [FindPackageShare('jackal_control'), 'config', ('teleop_' + joy_type.perform(lc) + '.yaml')]
     # )
-    filepath_config_joy = PathJoinSubstitution(
-        [FindPackageShare('jackal_control'),'config','teleop_logitech.yaml']
-    )
+    # filepath_config_joy = PathJoinSubstitution(
+    #     [FindPackageShare('jackal_control'),'config','teleop_logitech.yaml']
+    # )
 
-    log_launch_start = LogInfo(
-        msg=f"JACKAL LOG: Starting Jackal TELEOP launch... {filepath_config_joy}"
-    )
+    # filepath_config_joy = PathJoinSubstitution(
+    #     [FindPackageShare('jackal_control'),'config','joy_bt.yaml']
+    # )
+
     pkg_jackal_control = get_package_share_directory("jackal_control")
     joy2twist_params = os.path.join(pkg_jackal_control, "config", "joy_bt.yaml")
 
@@ -29,7 +30,7 @@ def generate_launch_description():
         package="joy2twist",
         executable="joy2twist",
         name="joy2twist_node",
-        parameters=[joy2twist_params],
+        parameters=[joy2twist_params, {"use_sim_time": True}],
         output={"screen"},
         remappings={("cmd_vel", "joy_vel")},
         emulate_tty="true",
@@ -40,6 +41,7 @@ def generate_launch_description():
         executable="joy_linux_node",
         output={"screen"},
         emulate_tty="true",
+        parameters=[{"use_sim_time": True}],
     )
 
 
@@ -62,7 +64,6 @@ def generate_launch_description():
 
 
     ld = LaunchDescription()
-    ld.add_action(log_launch_start)
     ld.add_action(start_joy2twist_node)
     ld.add_action(start_joy_linux_node)
     # ld.add_action(node_joy)

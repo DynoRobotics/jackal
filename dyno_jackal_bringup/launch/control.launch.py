@@ -22,6 +22,7 @@ def generate_launch_description():
             executable='spawner',
             arguments=['joint_state_broadcaster', '-c', '/jackal/controller_manager'],
             output='screen',
+            parameters=[{'use_sim_time': True}],
         ),
 
         # Velocity Controller
@@ -31,6 +32,7 @@ def generate_launch_description():
             executable='spawner',
             arguments=['velocity_controller', '-c', '/jackal/controller_manager'],
             output='screen',
+            parameters=[{'use_sim_time': True}],
         )
     ])
 

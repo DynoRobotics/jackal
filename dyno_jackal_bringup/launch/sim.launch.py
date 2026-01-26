@@ -13,12 +13,6 @@ from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 
 from dyno_utils.launch_utils import DynoWaitFor
-import rclpy.qos
-
-import std_msgs.msg
-import sensor_msgs.msg
-import nav_msgs.msg
-import rosgraph_msgs.msg
 
 def generate_launch_description():
 
@@ -41,7 +35,7 @@ def generate_launch_description():
     )
 
     declare_use_sim_time_arg = DeclareLaunchArgument(
-        "namespace", 
+        "use_sim_time", 
         default_value="True", 
         description="Whether or not simulation time should be used"
     )
@@ -106,7 +100,7 @@ def generate_launch_description():
             ("cmd_vel_in", "velocity_controller/cmd_vel_unstamped"),
             ("cmd_vel_out", "velocity_controller/cmd_vel"),
         ],
-        parameters=[{"frame_id": f"jackal/base_link"}, {"use_sim_time": True}],
+        parameters=[{"frame_id": f"jackal/base_link"}, {"use_sim_time": use_sim_time}],
     )
     
     jackal_with_namespace_and_remapping = GroupAction(
