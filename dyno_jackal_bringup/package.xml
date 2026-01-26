@@ -16,7 +16,7 @@
   <depend>navigation2</depend>
   <depend>robot_localization</depend>
   <depend>twist_mux</depend>
-  <depend>gazebo_ros_pkgs</depend>
+  <depend>ros_gz</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
