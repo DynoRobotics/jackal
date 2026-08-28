@@ -41,21 +41,22 @@ def generate_launch_description():
 
     # Localization
     localization_group_action = GroupAction([
-        Node( # Extended Kalman Filter
-            package='robot_localization',
-            executable='ekf_node',
-            name='ekf_node',
-            output='screen',
-            parameters=[
-                config_jackal_ekf,
-                {
-                    "odom_frame": LaunchConfiguration("odom_frame"), 
-                    "base_link_frame": LaunchConfiguration("base_link_frame"),
-                    "world_frame": LaunchConfiguration("odom_frame"),
-                    "use_sim_time": LaunchConfiguration("is_simulation")
-                },
-            ],
-        ),
+    #     Node( # Extended Kalman Filter
+    #         package='robot_localization',
+    #         executable='ekf_node',
+    #         name='ekf_node',
+    #         output='screen',
+    #         parameters=[
+    #             config_jackal_ekf,
+    #             {
+    #                 "odom_frame": LaunchConfiguration("odom_frame"), 
+    #                 "base_link_frame": LaunchConfiguration("base_link_frame"),
+    #                 "world_frame": LaunchConfiguration("odom_frame"),
+    #                 "publish_tf": LaunchConfiguration("ekf_publish_tf"),
+    #                 "use_sim_time": LaunchConfiguration("is_simulation")
+    #             },
+    #         ],
+    #     ),
     ])
 
     # Connect Jackal to Rviz frame.

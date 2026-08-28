@@ -15,7 +15,7 @@ def generate_launch_description():
     map_file = os.path.join(
         get_package_share_directory("pallet_truck_navigation"),
         "maps",
-        "warehouse.yaml",
+        "warehouse_corrected.yaml",
     )
 
     return LaunchDescription([

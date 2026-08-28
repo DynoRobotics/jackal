@@ -39,7 +39,7 @@
       # odom1_queue_size: 10
 
       # PLACEHOLDER (only gazebo [x,y,yaw] data)
-      odom0: pose_data
+      odom0: odom_ground_truth
       odom0_config: [true, true, false,  # x, y, z
                     false, false, true,  # roll, pitch, yaw
                     false, false, false, # x', y', z'

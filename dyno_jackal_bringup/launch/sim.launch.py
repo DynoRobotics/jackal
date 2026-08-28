@@ -72,6 +72,22 @@ def generate_launch_description():
     jackal_navigation = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_dyno_jackal_bringup, "launch", "nav2.launch.py")))
+
+    odom_ground_truth_tf = Node(
+        package="dyno_jackal_bringup",
+        executable="odom_ground_truth_tf_publisher.py",
+        name="odom_ground_truth_tf_publisher",
+        output="screen",
+        parameters=[
+            {
+                "source_topic": "odom_ground_truth",
+                "parent_frame": [LaunchConfiguration("namespace"), "/odom"],
+                "child_frame": [LaunchConfiguration("namespace"), "/base_link"],
+                "use_odometry_header_frames": False,
+                "use_sim_time": use_sim_time,
+            }
+        ],
+    )
     
     
     twist_mux = Node(
@@ -112,6 +128,7 @@ def generate_launch_description():
             control,
             twist_mux,
             twist_stamper,
+            odom_ground_truth_tf,
             keyboard_steering,
             jackal_localization,
         ]

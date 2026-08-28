@@ -26,11 +26,11 @@ jackal:
       odom_frame_id: odom # You may think that this should be "jackal/odom" based on how the other files look, but no. Doing that will make it /jackal/jackal/odom :)
       base_frame_id: base_link
 
-      publish_odom: true
+      publish_odom: false
       pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 0.03]
       twist_covariance_diagonal: [1000000.0, 1000000.0, 0.03, 1000000.0, 1000000.0, 0.03]
 
-      enable_odom_tf: true
+      enable_odom_tf: false
       cmd_vel_timeout: 0.25
       #publish_limited_velocity: true
       #velocity_rolling_window_size: 10
